@@ -90,5 +90,5 @@ test("Check for Getting Started Text", () => {
 });
 ```
 
-
-[참고 링크](https://circleci.com/blog/next-testing/)
+[참고 링크 1](https://circleci.com/blog/next-testing/)
+[참고 링크 2](https://medium.com/frontend-digest/setting-up-testing-library-with-nextjs-a9702cbde32d)
