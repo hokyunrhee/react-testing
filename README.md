@@ -27,8 +27,68 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Installing and setting up Jest for testing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm install -D jest @testing-library/react @testing-library/jest-dom @testing-library/dom babel-jest
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+babel.config.js : configuration file to instruct babel-jest to use the custom preset for Next.js.
+```js
+module.exports = {
+  presets: ["next/babel"]
+};
+```
+
+jest.config.js
+```js
+module.exports = {
+  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  transform: {
+    "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest"
+  },
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+    "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+  }
+};
+```
+
+package.json
+```
+...
+"scripts": {
+    ...
+    "test": "jest"
+},
+...
+```
+
+## Mocking static assets
+
+\_\_mocks__/fileMock.js
+```js
+module.exports = "placeholder-file";
+```
+
+\_\_mocks__/fileMock.js
+```js
+module.exports = {};
+```
+
+## Adding tests
+
+\_\_tests__/HomeTest.js
+```jsx
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import Home from "../pages/index";
+
+test("Check for Getting Started Text", () => {
+  const { getByText } = render(<Home />);
+  expect(getByText("Get started by editing")).toBeInTheDocument();
+});
+```
+
+
+[참고 링크](https://circleci.com/blog/next-testing/)
